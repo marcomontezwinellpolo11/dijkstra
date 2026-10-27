@@ -28,7 +28,7 @@ class WeightedGraph:
         # Only add the node if it isn't already a key in self._adj.
         # Hint: a new node starts with an empty neighbor dict: {}
         if node not in self._adj:
-            pass # we will work on this later
+            self._adj[node] = {}
 
 
     def add_edge(self, u, v, weight, directed=False):
@@ -47,7 +47,11 @@ class WeightedGraph:
         # Step 2: record the edge u -> v with the given weight.
         #         self._adj[u][v] = weight
         # Step 3: if not directed, also record v -> u with the same weight.
-        pass
+        self.add_node(u)
+        self.add_node(v)
+        self._adj[u][v] = weight
+        if not directed:
+            self._adj[v][u] = weight
 
     def get_neighbors(self, node):
         """
@@ -63,7 +67,10 @@ class WeightedGraph:
         """
         # Look up node in self._adj and convert its inner dict to a list of
         # (neighbor, weight) tuples. Return [] if the node doesn't exist.
-        pass
+        if node in self._adj:
+            return list(self._adj[node].items())
+        if node not in self._adj:
+            return []
 
     def get_nodes(self):
         """
@@ -74,4 +81,4 @@ class WeightedGraph:
 
         Hint: the keys of self._adj are exactly the nodes.
         """
-        pass
+        return list(self._adj.keys())
