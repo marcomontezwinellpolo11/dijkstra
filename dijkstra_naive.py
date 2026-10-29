@@ -32,8 +32,22 @@ def dijkstra_naive(graph, start):
             op_count  — int, total number of "scan steps" performed while
                         searching for the minimum each iteration. Used to
                         demonstrate the cost of the naive approach.
+
+    References:
+        - Dictionary Comprehension (can be used to create a dictionary from a list of keys):
+            https://www.geeksforgeeks.org/python/python-dictionary-comprehension/
+        - All Python Comprehensions (more general; includes Lists, Dictionaries, and Sets):
+            https://www.geeksforgeeks.org/python/comprehensions-in-python/
     """
-    pass
+    INFINITY = float('inf')
+    unvisited_set = dict.fromkeys(graph.get_nodes(),INFINITY)
+    op_count = 0
+    prev = {}
+    unvisited_set[start] = 0
+
+    for node in unvisited_set:
+        pass
+
 
 
 def shortest_path_naive(graph, start, end):
