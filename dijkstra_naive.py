@@ -44,10 +44,14 @@ def dijkstra_naive(graph, start):
     op_count = 0
     prev = {}
     unvisited_set[start] = 0
+    least_distance = INFINITY
+    closest_node = None
 
     for node in unvisited_set:
-        pass
-
+        if unvisited_set[node] < least_distance:
+            closest_node = node
+            least_distance = unvisited_set[node]
+        op_count += 1
 
 
 def shortest_path_naive(graph, start, end):
