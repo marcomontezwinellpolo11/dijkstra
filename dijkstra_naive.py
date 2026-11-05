@@ -39,6 +39,7 @@ def dijkstra_naive(graph, start):
         - All Python Comprehensions (more general; includes Lists, Dictionaries, and Sets):
             https://www.geeksforgeeks.org/python/comprehensions-in-python/
     """
+    # INIT Phase
     INFINITY = float('inf')
     unvisited_set = dict.fromkeys(graph.get_nodes(),INFINITY)
     op_count = 0
@@ -46,12 +47,27 @@ def dijkstra_naive(graph, start):
     unvisited_set[start] = 0
     least_distance = INFINITY
     closest_node = None
+    dist = {}
 
-    for node in unvisited_set:
-        if unvisited_set[node] < least_distance:
-            closest_node = node
-            least_distance = unvisited_set[node]
-        op_count += 1
+    while len(unvisited_set) > 0:
+        # SELECT Phase
+
+        for node in unvisited_set:
+            if unvisited_set[node] < least_distance:
+                closest_node = node
+                least_distance = unvisited_set[node]
+            op_count += 1
+        distance_value = unvisited_set.pop(closest_node)
+        dist[closest_node] = distance_value
+
+        # RELAX Phase (Not relaxing)
+        neighbors = graph.get_neighbors(closest_node)
+        for neighbor in neighbors:
+            if neighbor[1] < unvisited_set[neighbor[0]]:
+                # UPDATE Phase
+                unvisited_set[neighbor[0]] = distance_value + neighbor[1]
+                prev[unvisited_set[neighbor[0]]] = closest_node
+            op_count += 1
 
 
 def shortest_path_naive(graph, start, end):
