@@ -45,15 +45,16 @@ def dijkstra_naive(graph, start):
     op_count = 0
     prev = {}
     unvisited_set[start] = 0
-    least_distance = INFINITY
-    closest_node = None
+    prev[start] = None
     dist = {}
 
     while len(unvisited_set) > 0:
+        least_distance = INFINITY
+        closest_node = None
         # SELECT Phase
 
         for node in unvisited_set:
-            if unvisited_set[node] < least_distance:
+            if unvisited_set[node] <= least_distance:
                 closest_node = node
                 least_distance = unvisited_set[node]
             op_count += 1
@@ -63,11 +64,15 @@ def dijkstra_naive(graph, start):
         # RELAX Phase (Not relaxing)
         neighbors = graph.get_neighbors(closest_node)
         for neighbor in neighbors:
-            if neighbor[1] < unvisited_set[neighbor[0]]:
+            if neighbor[0] not in unvisited_set:
+                continue
+            if distance_value + neighbor[1] < unvisited_set[neighbor[0]]:
                 # UPDATE Phase
                 unvisited_set[neighbor[0]] = distance_value + neighbor[1]
-                prev[unvisited_set[neighbor[0]]] = closest_node
+                prev[unvisited_set[neighbor[1]]] = closest_node
             op_count += 1
+
+    return (dist, prev, op_count)
 
 
 def shortest_path_naive(graph, start, end):
