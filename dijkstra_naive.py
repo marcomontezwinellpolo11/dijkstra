@@ -69,7 +69,7 @@ def dijkstra_naive(graph, start):
             if distance_value + neighbor[1] < unvisited_set[neighbor[0]]:
                 # UPDATE Phase
                 unvisited_set[neighbor[0]] = distance_value + neighbor[1]
-                prev[unvisited_set[neighbor[1]]] = closest_node
+                prev[neighbor[0]] = closest_node
             op_count += 1
 
     return (dist, prev, op_count)
@@ -88,4 +88,9 @@ def shortest_path_naive(graph, start, end):
     Returns:
         list of nodes [start, ..., end], or None if unreachable
     """
-    pass
+    node_list = []
+    dijkstra_result = dijkstra_naive(graph, start)
+    if dijkstra_result[0] == float('inf'):
+        return
+    for node in dijkstra_result[1]:
+        pass # Not done yet.
