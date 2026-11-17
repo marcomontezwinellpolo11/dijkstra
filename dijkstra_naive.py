@@ -92,5 +92,10 @@ def shortest_path_naive(graph, start, end):
     dijkstra_result = dijkstra_naive(graph, start)
     if dijkstra_result[0] == float('inf'):
         return
-    for node in dijkstra_result[1]:
-        pass # Not done yet.
+    current_node = end
+    node_list.append(end)
+    while current_node != start:
+        node_list.append(dijkstra_result[1][current_node])
+        current_node = dijkstra_result[1][current_node]
+    node_list.reverse()
+    return node_list
