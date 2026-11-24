@@ -13,6 +13,7 @@
 # ── Python's heapq module ─────────────────────────────────────────────────────
 #
 # Python provides a min-heap via the heapq module:
+# https://docs.python.org/3/library/heapq.html
 #
 #   import heapq
 #
@@ -52,7 +53,35 @@ def dijkstra_heap(graph, start):
             op_count  — int, number of times a node was popped from the heap.
                         Compare this to the naive scan count in the perf tests.
     """
-    pass
+    # INIT Phase
+    INFINITY = float('inf')
+    unvisited_set = []
+    heapq.heappush(unvisited_set, (INFINITY,graph.get_nodes()))
+    op_count = 0
+    prev = {}
+    heapq.heappush(unvisited_set, (0, start))
+    prev[start] = None
+    dist = {}
+
+    while len(unvisited_set) > 0:
+        least_distance = INFINITY
+        closest_node = None
+        # SELECT Phase
+        distance_value = heapq.heappop(unvisited_set)
+        dist[closest_node] = distance_value
+
+        # RELAX Phase (Not relaxing)
+        neighbors = graph.get_neighbors(closest_node)
+        for neighbor in neighbors:
+            if neighbor[0] not in unvisited_set:
+                continue
+            if distance_value + neighbor[1] < unvisited_set[neighbor[0]]:
+                # UPDATE Phase
+                unvisited_set[neighbor[0]] = distance_value + neighbor[1]
+                prev[neighbor[0]] = closest_node
+            op_count += 1
+
+    return (dist, prev, op_count)
 
 
 def shortest_path(graph, start, end):
